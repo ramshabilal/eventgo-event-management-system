@@ -64,7 +64,7 @@ An Example Event with Users:
 ![list](documentation/saved.png)
 
 ## Site map
-
+Arrows may not be very accurate but point is that all pages can be navigated in any order other than the login page which always comes first. A user needs to login or signup before they proceed in the app. Once in, they can jump between pages as they like.
 ![](documentation/sitemap.png)
 
 
