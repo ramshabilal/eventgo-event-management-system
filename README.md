@@ -1,8 +1,8 @@
-# Event Management System
+# EventGo! - An Event Management System
 
 ## Overview
 
-The Event Management System (EMS) is a web application that simplifies event planning and registration. Users can register, create, and manage events, making it easy to host and attend events.
+EventGo! is an Event Management System (EMS) - a web application that simplifies event planning and registration. Users can register, create, and manage events, making it easy to host and attend events. Once signed up, a user can log in to add events and view their upcoming/saved/posted events.
 
 ## Data Model
 
