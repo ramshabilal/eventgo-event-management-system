@@ -49,7 +49,7 @@ An Example Event with Users:
 
 /login - page for creating a new shopping list
 
-![](documentation/WireGen - AI GPT wireframe generation (Community).png)
+![](documentation/WireGen - AI GPT wireframe generation (Community) (1).png)
 
 /list - page for showing all shopping lists
 
