@@ -47,17 +47,21 @@ An Example Event with Users:
 
 (__TODO__: wireframes for all of the pages on your site; they can be as simple as photos of drawings or you can use a tool like Balsamiq, Omnigraffle, etc.)
 
-/login - page for creating a new shopping list
+/login - page for login or sign up
 
-![](documentation/WireGen - AI GPT wireframe generation (Community) (1).png)
+![](documentation/login.png)
 
-/list - page for showing all shopping lists
+/allevents- page for showing all events and adding new events
 
-![list](documentation/list.png)
+![allevents](documentation/allevents.png)
 
-/list/slug - page for showing specific shopping list
+/myevents - page for showing events you added
 
-![list](documentation/list-slug.png)
+![list](documentation/myevents.png)
+
+/saved - page for showing events you saved/registered for
+
+![list](documentation/saved.png)
 
 ## Site map
 
@@ -66,8 +70,6 @@ An Example Event with Users:
 Here's a [complex example from wikipedia](https://upload.wikimedia.org/wikipedia/commons/2/20/Sitemap_google.jpg), but you can create one without the screenshots, drop shadows, etc. ... just names of pages and where they flow to.
 
 ## User Stories or Use Cases
-
-(__TODO__: write out how your application will be used through [user stories](http://en.wikipedia.org/wiki/User_story#Format) and / or [use cases](https://en.wikipedia.org/wiki/Use_case))
 
 1. As a non-registered user, I can register a new account.
 2. As a user, I can log in to the site.
@@ -88,17 +90,11 @@ Here's a [complex example from wikipedia](https://upload.wikimedia.org/wikipedia
     * nconf
 * (6 points) Use a front-end framework
     * React
-
+* Use a javascript library for some kind of data visualization for example to visualize a calendar/trends/number of events every month etc
 I may not include all of these, but I will research these initially to shortlist the ones I want to use.
 
 ## [Link to Initial Main Project File](app.mjs) 
-
-(__TODO__: create a skeleton Express application with a package.json, app.mjs, views folder, etc. ... and link to your initial app.mjs)
-
+  
 ## Annotations / References Used
 
-(__TODO__: list any tutorials/references/etc. that you've based your code off of)
-
-1. [passport.js authentication docs](http://passportjs.org/docs) - (add link to source code that was based on this)
-2. [tutorial on vue.js](https://vuejs.org/v2/guide/) - (add link to source code that was based on this)
-
+Did not write much code other than the schemas yet so no references so far. 
