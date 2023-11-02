@@ -1,48 +1,75 @@
+# Event Management System
+
+## Overview
+
+The Event Management System (EMS) is a web application that simplifies event planning and registration. Users can register, create, and manage events, making it easy to host and attend events.
+
+## Data Model
+
+The application stores Users, Events, and Registrations:
+
+- Users can create and manage events.
+- Each event can have multiple user registrations.
+- Users can register for events.
+
+**Sample Documents:**
+
+An Example User:
+
+```json
+{
+  username: "eventplanner",
+  hash: // a password hash,
+  events: // an array of references to Event documents
+}
+
+```
+
+
+
 The content below is an example project proposal / requirements document. Replace the text below the lines marked "__TODO__" with details specific to your project. Remove the "TODO" lines.
 
 (__TODO__: your project name)
 
-# Shoppy Shoperson 
+# Event Management System
 
 ## Overview
 
-(__TODO__: a brief one or two paragraph, high-level description of your project)
-
-Remembering what to buy at the grocery store is waaaaay too difficult. Also, shopping for groceries when you're hungry leads to regrettable purchases. Sooo... that's where Shoppy Shoperson comes in!
-
-Shoppy Shoperson is a web app that will allow users to keep track of multiple grocery lists. Users can register and login. Once they're logged in, they can create or view their grocery list. For every list that they have, they can add items to the list or cross off items.
-
+The Event Management System (EMS) is a web application that simplifies event planning and registration. Users can register, create, and manage events, making it easy to host and attend events.
 
 ## Data Model
 
-(__TODO__: a description of your application's data and their relationships to each other) 
+The application stores Users, Events, and Registrations:
 
-The application will store Users, Lists and Items
+- Users can create and post events and register for other events.
+- Each event can have multiple user registrations.
+- Users can register for multiple events. (via references)
 
-* users can have multiple lists (via references)
-* each list can have multiple items (by embedding)
 
-(__TODO__: sample documents)
 
 An Example User:
 
 ```javascript
 {
-  username: "shannonshopper",
+  username: "eventplanner",
   hash: // a password hash,
-  lists: // an array of references to List documents
+  events: // an array of references to Event documents,
+  events_registered: // an array of references to Event documents
 }
 ```
 
-An Example List with Embedded Items:
+An Example Event with Users:
 
 ```javascript
 {
-  user: // a reference to a User object
-  name: "Breakfast foods",
-  items: [
-    { name: "pancakes", quantity: "9876", checked: false},
-    { name: "ramen", quantity: "2", checked: true},
+  organizer: // a reference to a User object
+  name: "Tech Conference",
+  date: "2023-12-01",
+  location: "Virtual",
+  description: "A conference on the latest tech trends.",
+  registrations: [
+    { user: // a reference to a User, attended: true },
+    { user: // a reference to a User, attended: false },
   ],
   createdAt: // timestamp
 }
