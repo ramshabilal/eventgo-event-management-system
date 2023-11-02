@@ -65,7 +65,8 @@ An Example Event with Users:
 
 ## Site map
 
-(__TODO__: draw out a site map that shows how pages are related to each other)
+![](documentation/sitemap.png)
+
 
 Here's a [complex example from wikipedia](https://upload.wikimedia.org/wikipedia/commons/2/20/Sitemap_google.jpg), but you can create one without the screenshots, drop shadows, etc. ... just names of pages and where they flow to.
 
@@ -79,9 +80,7 @@ Here's a [complex example from wikipedia](https://upload.wikimedia.org/wikipedia
 6. As a user, I can register for events.
 
 ## Research Topics
-
-(__TODO__: the research topics that you're planning on working on along with their point values... and the total points of research topics listed)
-
+  
 * (5 points) Integrate user authentication
     * I'm going to be using passport.js for user authentication
 * (4 points) Perform client-side form validation using a JavaScript library
@@ -90,11 +89,11 @@ Here's a [complex example from wikipedia](https://upload.wikimedia.org/wikipedia
     * nconf
 * (6 points) Use a front-end framework
     * React
-* Use a javascript library for some kind of data visualization for example to visualize a calendar/trends/number of events every month etc
+* Use a javascript library for some type of data visualization for example to visualize a calendar/trends/number of events every month etc
 I may not include all of these, but I will research these initially to shortlist the ones I want to use.
 
 ## [Link to Initial Main Project File](app.mjs) 
   
 ## Annotations / References Used
 
-Did not write much code other than the schemas yet so no references so far. 
+I have not written much code other than the schemas yet so no references so far. 
