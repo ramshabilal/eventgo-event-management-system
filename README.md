@@ -68,8 +68,6 @@ Arrows may not be very accurate but point is that all pages can be navigated in 
 ![](documentation/sitemap.png)
 
 
-Here's a [complex example from wikipedia](https://upload.wikimedia.org/wikipedia/commons/2/20/Sitemap_google.jpg), but you can create one without the screenshots, drop shadows, etc. ... just names of pages and where they flow to.
-
 ## User Stories or Use Cases
 
 1. As a non-registered user, I can register a new account.
