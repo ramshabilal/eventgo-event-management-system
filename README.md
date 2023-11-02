@@ -47,9 +47,9 @@ An Example Event with Users:
 
 (__TODO__: wireframes for all of the pages on your site; they can be as simple as photos of drawings or you can use a tool like Balsamiq, Omnigraffle, etc.)
 
-/list/create - page for creating a new shopping list
+/login - page for creating a new shopping list
 
-![list create](documentation/list-create.png)
+![](documentation/WireGen - AI GPT wireframe generation (Community).png)
 
 /list - page for showing all shopping lists
 
