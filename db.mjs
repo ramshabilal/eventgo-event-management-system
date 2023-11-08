@@ -1,12 +1,14 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
+import passportLocalMongoose from 'passport-local-mongoose';
 
 // Define the User Schema
 const userSchema = new mongoose.Schema({
-  username: { type: String, required: true },
-  hash: { type: String, required: true },
   events: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Event' }],
   events_registered: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Event' }],
 });
+
+// Use passportLocalMongoose to enhance the User schema with authentication functionality
+userSchema.plugin(passportLocalMongoose);
 
 // Define the Event Schema
 const eventSchema = new mongoose.Schema({
@@ -27,7 +29,8 @@ const eventSchema = new mongoose.Schema({
 // Create and export the User and Event models
 const User = mongoose.model('User', userSchema);
 const Event = mongoose.model('Event', eventSchema);
+  
+mongoose.connect(process.env.DSN, {tls:true});
 
-module.exports = { User, Event }; 
-
-
+export default User; 
+export {Event}; 

@@ -1,0 +1,91 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(to right, rgb(171, 1, 171), rgb(255, 153, 0));
+    color: white; 
+}
+
+img {
+    width: 100px;
+    height: 100px;
+    padding-right: 0px;
+}
+
+.content-container {
+    margin: 0 auto;  /* Center the container on the page */
+    text-align: left; /* Ensure text alignment is left within the container */
+  }
+
+.nav-bar {
+    display: flex;
+    padding: 20px;
+    padding-bottom: 10px;
+} 
+  
+.nav li {
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+    justify-content: center;
+    align-items: center;
+}
+.nav {
+    display: flex;
+    justify-content: center;
+}
+
+
+.nav a:hover {
+    background-color: #ff9900c3;
+    color: ff9900; 
+}
+.nav a {
+    display: inline-block;
+    padding: 10px 20px;
+    /* background-color: #ff9900; */
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 800;
+    border-radius: 10px;
+}
+
+.appName {
+    text-align: center;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 80px;
+    font-weight: 800;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+
+
+/*
+<nav>
+                <ul class="nav">
+                    <li><a href="/">Welcome</a></li>
+                    <li><a href="/login">Login</a></li>
+                    <li><a href="/register">Register</a></li>
+                    <li><a href="/events">Events</a></li>
+                    <li><a href="/myevents">My Events</a></li>
+                    <li><a href="/add">Add Events</a></li>
+                </ul>
+            </nav>
+*/
+
+
+/*  for events page   */ 
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+
+  th {
+    background-color: none;
+  }
