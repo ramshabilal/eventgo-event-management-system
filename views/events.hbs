@@ -10,7 +10,33 @@
 <!-- Create a table with headers for event name, date, and location -->
 <div class="content-container"></div>
 <h1 class="appName">Events</h1>
-<table>
+
+
+  {{#each events}}  
+      <div class="event-box">
+      <h2>{{this.name}}</h2>
+      <p>Date: {{this.date}}</p>
+      <p>Location: {{this.location}}</p>
+      <p>Description: {{this.description}}</p>
+
+      {{#if event.imageData}}
+        <img src="data:{{this.imageData.contentType}};base64,{{event.imageData.data.toString('base64')}}" alt="{{event.name}}">
+      {{/if}}
+
+      <button>Register</button>
+      </div>
+
+  {{/each}}
+
+<br><br><br>
+ <button> <a href="/logout" style="text-decoration: none;">Log Out</a>  </button> 
+</div>
+</html>
+
+
+
+
+{{!-- <table>
   <thead>
     <tr>
       <th>Event Name</th>
@@ -30,7 +56,4 @@
       </tr>
     {{/each}}
   </tbody>
-</table>
- <a href="/logout">Log Out</a>
-</div>
-</html>
+</table> --}}

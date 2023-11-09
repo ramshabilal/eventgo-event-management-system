@@ -10,6 +10,23 @@ img {
     padding-right: 0px;
 }
 
+button {
+    background-color: #ff9900;
+    color: #ffffff;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 800;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #ff9900c3;
+    color: ff9900; 
+
+}
+
 .content-container {
     margin: 0 auto;  /* Center the container on the page */
     text-align: left; /* Ensure text alignment is left within the container */
@@ -57,20 +74,27 @@ img {
     text-decoration: none;
 }
 
+.event-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    margin: 50px 500px 50px 500px;
+    border-radius: 10px;
+    background-color: lightpink;
+    color: #000000;
+    text-decoration: none;
+    font-weight: 800;
+    border: none;
+    cursor: pointer;
+}
 
+.event-box:hover {
+    background-color: #ff9900c3;
+    color: ff9900; 
+}
 
-/*
-<nav>
-                <ul class="nav">
-                    <li><a href="/">Welcome</a></li>
-                    <li><a href="/login">Login</a></li>
-                    <li><a href="/register">Register</a></li>
-                    <li><a href="/events">Events</a></li>
-                    <li><a href="/myevents">My Events</a></li>
-                    <li><a href="/add">Add Events</a></li>
-                </ul>
-            </nav>
-*/
 
 
 /*  for events page   */ 

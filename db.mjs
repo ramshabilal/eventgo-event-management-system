@@ -24,13 +24,18 @@ const eventSchema = new mongoose.Schema({
     },
   ],
   createdAt: { type: Date, default: Date.now },
+  
+  // fields for image data
+  imageData: {
+    data: Buffer, // Binary image data
+    contentType: String, // MIME type (e.g., 'image/jpeg', 'image/png')
+  },
 });
 
 // Create and export the User and Event models
 const User = mongoose.model('User', userSchema);
 const Event = mongoose.model('Event', eventSchema);
-  
-mongoose.connect(process.env.DSN, {tls:true});
 
-export default User; 
-export {Event}; 
+mongoose.connect(process.env.DSN, { tls: true });
+
+export { User, Event };

@@ -1,7 +1,6 @@
 import './config.mjs'; 
 import './db.mjs';
 import './auth.mjs';
-import Event from './db.mjs';
 
 import passport from 'passport';
 import express from 'express';
@@ -12,6 +11,7 @@ import LocalStrategy from 'passport-local';
 import flash from 'express-flash'; 
 import path from 'path';
 import { fileURLToPath } from 'url';
+import multer from 'multer'; // Import the multer library
 
 // Create a new Express application
  const app = express();
@@ -23,7 +23,7 @@ app.use(session({
     saveUninitialized: false,
 }));
 // Use the express-flash middleware
-//app.use(flash());
+app.use(flash());
 
 // Initialize Passport and set up session management
 app.use(passport.initialize());
@@ -32,7 +32,8 @@ app.use(passport.session());
 // Passport Local Strategy
 passport.use(User.createStrategy());
 
-import User from './db.mjs';
+import {User, Event} from './db.mjs';
+//import Event from './db.mjs';
 
 // To use with sessions
 passport.serializeUser(User.serializeUser());
@@ -119,9 +120,59 @@ app.post('/login', passport.authenticate('local', {
 //   });
 
 
-app.get('/events', connectEnsureLogin.ensureLoggedIn(), (req, res) => {
-    res.render('events', {'events' : events});
+// Add a new route for the form submission
+app.get('/add', connectEnsureLogin.ensureLoggedIn(), (req, res) => {
+    res.render('add'); // Render the form
+  });
+
+
+// Set up multer to handle file uploads
+const storage = multer.memoryStorage(); // Store the image in memory as binary data
+const upload = multer({ storage });
+
+  app.post('/add', connectEnsureLogin.ensureLoggedIn(), upload.single('image'), async (req, res) => {
+    const { name, date, location, description } = req.body;
+    const userId = req.user._id; // Get the ID of the logged-in user
+  
+    try{
+    // Create a new event document
+        await Event.create({
+            organizer: userId,
+            name,
+            date,
+            location,
+            description,
+            imageData: {
+                data: req.file.buffer, // The image binary data
+                contentType: req.file.mimetype, // The image MIME type
+              },
+            // Can also set other properties as needed
+        }) 
+        // Redirect back to the page that shows all reviews (e.g., '/')
+        res.redirect('/events');
+    } catch(err) {
+        console.log("error"); 
+          res.redirect('/add'); // Redirect back to the form with an error message
+        }
+    });
+  
+app.get('/events', connectEnsureLogin.ensureLoggedIn(), async (req, res) => {
+    try {
+          // Fetch all events from the database
+          const events = await Event.find();
+          console.log(events); 
+          // Render the 'events' view, passing the events data
+          res.render('events', { 'events': events });
+    } catch (error) {
+          console.error(error);
+          req.flash('error', 'Error fetching events');
+          res.redirect('/events');
+    }
 });
+      
+
+
+
 
 
 app.listen(process.env.PORT || 3000);
