@@ -19,9 +19,9 @@
       <p>Location: {{this.location}}</p>
       <p>Description: {{this.description}}</p>
 
-      {{#if event.imageData}}
-        <img src="data:{{this.imageData.contentType}};base64,{{event.imageData.data.toString('base64')}}" alt="{{event.name}}">
-      {{/if}}
+      {{!-- {{#if event.imageData}}
+        <img src="data:{{this.imageData.contentType}};base64,{{event.imageData.data.toString('base64')}}" alt="{{event.name}}"> 
+      {{/if}} --}}
 
       <button>Register</button>
       </div>
