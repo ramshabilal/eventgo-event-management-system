@@ -56,11 +56,6 @@ app.set('view engine', 'hbs');
 // body parser (req.body)
 app.use(express.urlencoded({ extended: false }));
 
-let events = [{
-    name: 'Event 1',
-    location: 'Location 1',
-    date: 'Date 1'
-}];
 //mongodb+srv://ramshabilal:RsRRPoY9gZCVNjhi@cluster0.siam2zv.mongodb.net/hw04?retryWrites=true&w=majority
 
 //route handlers
@@ -170,8 +165,113 @@ app.get('/events', connectEnsureLogin.ensureLoggedIn(), async (req, res) => {
     }
 });
       
+app.get('/myevents', connectEnsureLogin.ensureLoggedIn(), async (req, res) => {
+    const userId = req.user._id;
+
+    try {
+        // Query the Event collection to find events organized by the logged-in user
+        const userEvents = await Event.find({ organizer: userId }).lean();
+        //console.log(userEvents);
+        // Render the myevents template with the user's events
+        res.render('myevents', { userEvents });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+app.post('/myevents/delete/:eventId', connectEnsureLogin.ensureLoggedIn(), async (req, res) => {
+    const userId = req.user._id;
+    const eventId = req.params.eventId;
+
+    try {
+        // Query the Event collection to find the specific event
+        const event = await Event.findOne({ _id: eventId, organizer: userId }).exec();
+
+        if (!event) {
+            return res.status(404).send('Event not found or you do not have permission to delete it.');
+        }
+
+        // Delete the event
+        await Event.deleteOne({ _id: eventId, organizer: userId }).exec();
+
+        // Redirect back to the myevents route or another appropriate route
+        res.redirect('/myevents');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// STARTING HERE
 
 
+// // Route handler for processing the search form and displaying the edit form
+// app.post('/myevents', connectEnsureLogin.ensureLoggedIn(), async (req, res) => {
+//     const userId = req.user._id;
+//     const { searchQuery } = req.body;
+
+//     try {
+//         // Query the Event collection to find events organized by the logged-in user
+//         const userEvents = await Event.find({ organizer: userId, name: { $regex: searchQuery, $options: 'i' } }).exec();
+//         console.log(userEvents);
+//         // Render the editEvents template with the search results
+//         res.render('edit', { userEvents });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).send('Internal Server Error');
+//     }
+// });
+
+// Route handler for displaying the edit form for a specific event
+// router.get('/myevents/edit/:eventId', connectEnsureLogin.ensureLoggedIn(), async (req, res) => {
+//     const userId = req.user._id;
+//     const eventId = req.params.eventId;
+
+//     try {
+//         // Query the Event collection to find the specific event
+//         const event = await Event.findOne({ _id: eventId, organizer: userId }).exec();
+
+//         if (!event) {
+//             return res.status(404).send('Event not found');
+//         }
+
+//         // Render the editEvent template with the event details
+//         res.render('editEvent', { event });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).send('Internal Server Error');
+//     }
+// });
+
+// Route handler for processing the form submission and updating the event
+// router.post('/myevents/edit/:eventId', connectEnsureLogin.ensureLoggedIn(), async (req, res) => {
+//     const userId = req.user._id;
+//     const eventId = req.params.eventId;
+//     const { name, date, location, description } = req.body;
+
+//     try {
+//         // Update the specific event
+//         const updatedEvent = await Event.findOneAndUpdate(
+//             { _id: eventId, organizer: userId },
+//             { name, date, location, description },
+//             { new: true }
+//         ).exec();
+
+//         if (!updatedEvent) {
+//             return res.status(404).send('Event not found');
+//         }
+
+//         // Redirect back to the myevents route or another appropriate route
+//         res.redirect('/myevents');
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).send('Internal Server Error');
+//     }
+// });
+
+
+// Ending HERE
 
 
    

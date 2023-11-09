@@ -10,27 +10,30 @@
 <!-- Create a table with headers for event name, date, and location -->
 <div class="content-container"></div>
 <h1 class="appName">Events</h1>
-<table>
-  <thead>
-    <tr>
-      <th>Event Name</th>
-      <th>Date</th>
-      <th>Location</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each events}}
-      <tr style="background-color:black">
-        <td>{{name}}</td>
-        <td>{{date}}</td>
-        <td>{{location}}</td>
-        <td>
-          <button class="add-button" onclick="addEvent('{{id}}')">Add</button>
-        </td>
-      </tr>
-    {{/each}}
-  </tbody>
-</table>
+
+
+
+<h1>My Events</h1>
+
+
+{{#if userEvents.length}}
+  {{#each userEvents}}
+    <div class="event-container">
+      <h2>{{this.name}}</h2>
+      <p>Date: {{this.date}}</p>
+      <p>Location: {{this.location}}</p>
+      <p>Description: {{this.description}}</p>
+
+ <!-- Add a delete button with a form -->
+        <form method="POST" action="/myevents/delete/{{_id}}">
+          <button type="submit">Delete Event</button>
+        </form>
+
+    </div>
+  {{/each}}
+{{else}}
+  <p>No events found.</p>
+{{/if}}
 
 </div>
 </html>
