@@ -27,10 +27,10 @@ const eventSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
   
   // fields for image data
-  imageData: {
-    data: Buffer, // Binary image data
-    contentType: String, // MIME type (e.g., 'image/jpeg', 'image/png')
-  },
+  // imageData: {
+  //   data: Buffer, // Binary image data
+  //   contentType: String, // MIME type (e.g., 'image/jpeg', 'image/png')
+  // },
 });
 
 // Create and export the User and Event models

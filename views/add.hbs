@@ -7,7 +7,8 @@
 </head>
 
 <body>
-<form method="POST" action="/add" enctype="multipart/form-data"
+
+<form method="POST" action="/add">
   <label for="name">Event Name:</label>
   <input type="text" name="name" required>
 
@@ -19,10 +20,6 @@
 
   <label for="description">Event Description:</label>
   <textarea name="description" rows="4" required></textarea>
-
-<!-- Input for image upload -->
-  <label for="image">Image:</label>
-  <input type="file" name="image">
 
   <button type="submit">Add Event</button>
 </form>

@@ -122,13 +122,14 @@ app.get('/add', connectEnsureLogin.ensureLoggedIn(), (req, res) => {
 
 
 // Set up multer to handle file uploads
-const storage = multer.memoryStorage(); // Store the image in memory as binary data
-const upload = multer({ storage });
+// const storage = multer.memoryStorage(); // Store the image in memory as binary data
+// const upload = multer({ storage });
 
-  app.post('/add', connectEnsureLogin.ensureLoggedIn(), upload.single('image'), async (req, res) => {
+  app.post('/add', connectEnsureLogin.ensureLoggedIn(), async (req, res) => {
     const { name, date, location, description } = req.body;
     const userId = req.user._id; // Get the ID of the logged-in user
-  
+  console.log("here" ); 
+    console.log(req.body); 
     try{
     // Create a new event document
         await Event.create({
@@ -137,10 +138,10 @@ const upload = multer({ storage });
             date,
             location,
             description,
-            imageData: {
-                data: req.file.buffer, // The image binary data
-                contentType: req.file.mimetype, // The image MIME type
-              },
+            // imageData: {
+            //     data: req.file.buffer, // The image binary data
+            //     contentType: req.file.mimetype, // The image MIME type
+            //   },
             // Can also set other properties as needed
         }) 
         // Redirect back to the page that shows all reviews (e.g., '/')
