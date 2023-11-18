@@ -1,39 +1,54 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>My Events</title>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="/stylesheets/main.css">
+  <title>My Events</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="/stylesheets/main.css">
 </head>
 
 <body>
-<!-- Create a table with headers for event name, date, and location -->
-<div class="content-container"></div>
-<h1 class="appName">Events</h1>
+  <!-- Create a table with headers for event name, date, and location -->
+  <div class="content-container">
+    <h1 class="appName">My Events</h1>
 
+<div class="search-bar">
+    <!-- Add a search form -->
+    <form action="/myevents" method="get">
+      <label for="search">Search:</label>
+      <input type="text" id="search" name="searchQuery" placeholder="Enter event name">
+      <button type="submit">Search</button>
+    </form>
 
-
-<h1>My Events</h1>
-
-
-{{#if userEvents.length}}
-  {{#each userEvents}}
-    <div class="event-container">
+    <!-- Add a sort dropdown -->
+    <form action="/myevents" method="get">
+      <label for="sort">Sort by date:</label>
+      <select id="sort" name="sortOrder">
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
+      </select>
+      <button type="submit">Sort</button>
+    </form>
+</div>
+    {{#if userEvents.length}}
+    {{#each userEvents}}
+    <div class="event-box">
       <h2>{{this.name}}</h2>
       <p>Date: {{this.date}}</p>
       <p>Location: {{this.location}}</p>
       <p>Description: {{this.description}}</p>
 
- <!-- Add a delete button with a form -->
-        <form method="POST" action="/myevents/delete/{{_id}}">
-          <button type="submit">Delete Event</button>
-        </form>
+      <!-- Add a delete button with a form -->
+      <form method="POST" action="/myevents/delete/{{_id}}">
+        <button type="submit">Delete Event</button>
+      </form>
 
     </div>
-  {{/each}}
-{{else}}
-  <p>No events found.</p>
-{{/if}}
+    {{/each}}
+    {{else}}
+    <p>No events found.</p>
+    {{/if}}
 
-</div>
+  </div>
+
 </html>

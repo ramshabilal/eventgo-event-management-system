@@ -8,9 +8,27 @@
 
 <body>
 <!-- Create a table with headers for event name, date, and location -->
-<div class="content-container"></div>
+<div class="content-container">
 <h1 class="appName">Events</h1>
 
+<!-- A search form -->
+<div class = "search-bar">
+    <form action="/events" method="get">
+        <label for="search">Search:</label>
+        <input type="text" id="search" name="searchQuery" placeholder="Enter event name">
+        <button type="submit">Search</button>
+    </form>
+
+    <!-- A sort dropdown -->
+    <form action="/events" method="get">
+        <label for="sort">Sort by date:</label>
+        <select id="sort" name="sortOrder">
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+        </select>
+        <button type="submit">Sort</button>
+    </form>
+</div>
 
   {{#each events}}  
       <div class="event-box">
@@ -23,7 +41,11 @@
         <img src="data:{{this.imageData.contentType}};base64,{{event.imageData.data.toString('base64')}}" alt="{{event.name}}"> 
       {{/if}} --}}
 
-      <button>Register</button>
+      <form action="/events/register" method="post">
+            <input type="hidden" name="eventId" value="{{this._id}}">
+            <button type="submit">Register</button>
+      </form>
+      
       </div>
 
   {{/each}}

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings</title>
+    <link rel="stylesheet" href="/stylesheets/main.css">
+</head>
+<body>
+
+    <div class="content-container">
+    <h1 class="appName">My Bookings</h1>
+
+    {{#each registeredEvents}}
+        <div class="event-box">
+            <h2>{{this.name}}</h2>
+            <p>Date: {{this.date}}</p>
+            <p>Location: {{this.location}}</p>
+            <p>Description: {{this.description}}</p>
+            
+            <!-- Add a form for canceling registration -->
+        <form action="/mybookings/cancel" method="post">
+            <input type="hidden" name="eventId" value="{{this._id}}">
+            <button type="submit">Cancel Registration</button>
+        </form>
+        </div>
+    {{/each}}
+
+    <br><br><br>
+    <button><a href="/logout" style="text-decoration: none;">Log Out</a></button>
+    </div>
+</body>
+</html>
