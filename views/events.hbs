@@ -11,8 +11,12 @@
 <div class="content-container">
 <h1 class="appName">Events</h1>
 
+
+
 <!-- A search form -->
 <div class = "search-bar">
+  <button> <a href = "/events/trends">Go To Event Trends </a></button>
+
     <form action="/events" method="get">
         <label for="search">Search:</label>
         <input type="text" id="search" name="searchQuery" placeholder="Enter event name">
@@ -31,7 +35,7 @@
 </div>
 
   {{#each events}}  
-      <div class="event-box">
+      <div class="event-box" data-aos="fade-up" data-aos-duration="3000">
       <h2>{{this.name}}</h2>
       <p>Date: {{this.date}}</p>
       <p>Location: {{this.location}}</p>

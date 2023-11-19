@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Events</title>
+    <link rel="stylesheet" href="/stylesheets/main.css">
+
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        .event-block {
+            border: 1px solid white;
+            padding: 10px;
+            margin: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .event-block:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content-container">
+        <h1 class="appName">Most Popular Events</h1>
+
+        <!-- Container for top events -->
+        <div id="topEventsContainer" data-aos="zoom-out" data-aos-duration="3000"></div>
+
+        <br><br><br>
+        <button><a href="/logout" style="text-decoration: none;">Log Out</a></button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Assuming topEventsData is an array of event objects with 'name' and 'registrations' properties
+            let topEventsData = []; 
+
+            {{#each events}}
+                topEventsData.push({ 
+                    name: '{{this.name}}', 
+                    _id: '{{this._id}}',
+                    registrations: [
+                    {{#each this.registrations}} 
+                        '{{this}}', 
+                    {{/each}}
+                    ] }); 
+            {{/each}}
+
+            // Sort events based on the number of registrations (descending order)
+            const sortedEvents = topEventsData.sort((a, b) => b.registrations.length - a.registrations.length);
+            let topEvents; 
+            // Take the top 5 events
+            if (sortedEvents.length > 5){
+            topEvents = sortedEvents.slice(0, 5);
+            } else {
+                 topEvents = sortedEvents.slice(0, sortedEvents.length);
+            }
+            
+            // Container to display top events
+            const topEventsContainer = document.getElementById('topEventsContainer');
+
+            // Create and append event blocks
+            topEvents.forEach(event => {
+                console.log(event); 
+                const eventBlock = document.createElement('div');
+                eventBlock.className = 'event-block';
+                eventBlock.innerHTML = `
+                    <h2>${event.name}</h2>
+                    <p>Registrations: ${event.registrations.length}</p>
+                `;
+                eventBlock.addEventListener('click', function () {
+                    // Redirect to the route of the event
+                    window.location.href = '/eventsById/' + event._id;
+                });
+                topEventsContainer.appendChild(eventBlock);
+            });
+        });
+    </script>
+</body>
+
+</html>

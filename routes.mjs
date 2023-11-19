@@ -5,6 +5,16 @@ import passport from 'passport';
 
 const router = express.Router();
 
+// Middleware to ensure user is logged in
+const ensureLoggedIn = connectEnsureLogin.ensureLoggedIn();
+
+// Middleware to handle errors
+// const handleErrors = (res, next) => (error) => {
+//     console.error(error);
+//     res.status(500).send('Internal Server Error');
+//     // or you can use next(error) to propagate the error to the error handling middleware
+// };
+
 // main page 
 router.get('/', (req, res) => {
     res.render('home'); 
@@ -64,11 +74,11 @@ router.post('/register', (req, res) => {
 // const upload = multer({ storage });
 
 // route to add new events
-router.get('/add', connectEnsureLogin.ensureLoggedIn(), (req, res) => {
+router.get('/add', ensureLoggedIn, (req, res) => {
     res.render('add'); // Render the form
   });
 
-  router.post('/add', connectEnsureLogin.ensureLoggedIn(), async (req, res) => {
+  router.post('/add', ensureLoggedIn, async (req, res) => {
     const { name, date, location, description } = req.body;
     const userId = req.user._id; // Get the ID of the logged-in user
   console.log("here" ); 
@@ -97,7 +107,7 @@ router.get('/add', connectEnsureLogin.ensureLoggedIn(), (req, res) => {
   
 // route to display all events
 /* 
-router.get('/events', connectEnsureLogin.ensureLoggedIn(), async (req, res) => {
+router.get('/events', ensureLoggedIn, async (req, res) => {
     try {
           // Fetch all events from the database
           const events = await Event.find();
@@ -112,7 +122,7 @@ router.get('/events', connectEnsureLogin.ensureLoggedIn(), async (req, res) => {
 });
 */ 
 // route to display all events with search and sort options
-router.get('/events', connectEnsureLogin.ensureLoggedIn(), async (req, res) => {
+router.get('/events', ensureLoggedIn, async (req, res) => {
     try {
         // Extract search and sort parameters from the query string
         const { searchQuery, sortOrder } = req.query;
@@ -136,8 +146,34 @@ router.get('/events', connectEnsureLogin.ensureLoggedIn(), async (req, res) => {
     }
 });
 
+
+
+// route to display trends in events 
+
+router.get('/events/trends', ensureLoggedIn, async (req, res) => {
+    res.render('trends');
+});
+
+router.get('/events/trends/monthly', ensureLoggedIn, async (req, res) => {
+    try{
+    const events = await Event.find({}).lean();
+    res.render('monthly', { events });
+    } catch (error) {
+        console.log(error); 
+    }
+});
+
+router.get('/events/trends/popular', ensureLoggedIn, async (req, res) => {
+    try{
+        const events = await Event.find({}).lean();
+        res.render('popular', { events });
+        } catch (error) {
+            console.log(error); 
+        }
+});
+
 // Route to handle event registration
-router.post('/events/register', connectEnsureLogin.ensureLoggedIn(), async (req, res) => {
+router.post('/events/register', ensureLoggedIn, async (req, res) => {
     try {
         const userId = req.user._id;
         const eventId = req.body.eventId;
@@ -173,7 +209,7 @@ router.post('/events/register', connectEnsureLogin.ensureLoggedIn(), async (req,
 });
 
 // route to display events the user added with search and sort options
-router.get('/myevents', connectEnsureLogin.ensureLoggedIn(), async (req, res) => {
+router.get('/myevents', ensureLoggedIn, async (req, res) => {
     try {
         // Extract search and sort parameters from the query string
         const { searchQuery, sortOrder } = req.query;
@@ -198,8 +234,25 @@ router.get('/myevents', connectEnsureLogin.ensureLoggedIn(), async (req, res) =>
     }
 });
 
+router.get('/eventsById/:eventId', async (req, res) => {
+    try {
+        const userId = req.user._id;
+        const eventId = req.params.eventId;
 
-router.post('/myevents/delete/:eventId', connectEnsureLogin.ensureLoggedIn(), async (req, res) => {
+        const event = await Event.findOne({ _id: eventId, organizer: userId }).exec();
+
+        if (!event) {
+            return res.status(404).send('Event not found or you do not have permission to delete it.');
+        }
+
+        res.render('eventDisplay', { event });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+router.post('/myevents/delete/:eventId', ensureLoggedIn, async (req, res) => {
     const userId = req.user._id;
     const eventId = req.params.eventId;
 
@@ -223,7 +276,7 @@ router.post('/myevents/delete/:eventId', connectEnsureLogin.ensureLoggedIn(), as
 });
 
 // Route to display events the user has registered for
-router.get('/mybookings', connectEnsureLogin.ensureLoggedIn(), async (req, res) => {
+router.get('/mybookings', ensureLoggedIn, async (req, res) => {
     try {
         // Get the user ID from the logged-in user
         const userId = req.user._id;
@@ -243,7 +296,7 @@ router.get('/mybookings', connectEnsureLogin.ensureLoggedIn(), async (req, res) 
 });
 
 // Route to handle registration cancellation
-router.post('/mybookings/cancel', connectEnsureLogin.ensureLoggedIn(), async (req, res) => {
+router.post('/mybookings/cancel', ensureLoggedIn, async (req, res) => {
     try {
         const userId = req.user._id;
         const eventId = req.body.eventId;
@@ -279,8 +332,8 @@ router.post('/mybookings/cancel', connectEnsureLogin.ensureLoggedIn(), async (re
     }
 });
 
+/*
 // STARTING HERE
-
 
 // // Route handler for processing the search form and displaying the edit form
 // router.post('/myevents', connectEnsureLogin.ensureLoggedIn(), async (req, res) => {
@@ -348,5 +401,6 @@ router.post('/mybookings/cancel', connectEnsureLogin.ensureLoggedIn(), async (re
 
 
 // Ending HERE
+*/ 
 
 export default router;

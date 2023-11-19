@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body{
+            background-color: black;
+            background-image: none;
+        }
+
+        #eventChart{
+            margin: 0 auto;
+            height: 800px;
+            width: 800px;
+            background-color: rgb(11, 11, 11);
+        }
+    </style>
+</head>
+<!-- Include Chart.js library -->
+<body>
+    <!-- HTML Canvas for the Chart -->
+<div class="content-container">
+    <h1 class="appName">Event Trends</h1>
+    <h1>Number of Events per Month</h1>
+<canvas id="eventChart" width="400" height="200"></canvas>
+</div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Assuming registeredEvents is an array of event objects with 'date' property
+        let registeredEvents = []; 
+        
+        {{#each events}}
+        registeredEvents.push({
+            date: '{{this.date}}'
+        });
+        {{/each}}
+
+        // Extract month and year from each event's date
+        const eventMonths = registeredEvents.map(event => {
+            const eventDate = new Date(event.date);
+            return eventDate.toLocaleString('en-us', { month: 'long' }); // Get full month name
+        });
+
+        // Count the number of events per month
+        const eventCounts = {};
+        eventMonths.forEach(month => {
+            eventCounts[month] = (eventCounts[month] || 0) + 1;
+        });
+
+        // Convert event counts into arrays for Chart.js
+        const labels = Object.keys(eventCounts);
+        const data = Object.values(eventCounts);
+
+        // Render the chart using Chart.js
+        var ctx = document.getElementById('eventChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Number of Events per Month',
+                    data: data,
+                    backgroundColor: 'lightblue',
+                    borderColor: 'black',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Month',
+                            color: 'white'
+                        },
+                        ticks: {
+                            color: 'white'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Number of Events',
+                            color: 'white'
+                        },
+                        ticks: {
+                            color: 'white'
+                        },
+                        grid: {
+                            color: 'white'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                        labels: {
+                            color: 'white' // Text color for legend labels
+                        }
+                    }
+                },
+                layout: {
+                    padding: {
+                        left: 10,
+                        right: 10,
+                        top: 10,
+                        bottom: 10
+                    }
+                },
+                responsive: true, // Enable responsiveness
+            }
+        });
+    });
+</script>
+</html>

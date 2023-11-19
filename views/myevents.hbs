@@ -5,6 +5,7 @@
   <title>My Events</title>
   <meta charset="utf-8">
   <link rel="stylesheet" href="/stylesheets/main.css">
+  
 </head>
 
 <body>
@@ -32,7 +33,7 @@
 </div>
     {{#if userEvents.length}}
     {{#each userEvents}}
-    <div class="event-box">
+    <div class="event-box" data-aos="zoom-out" data-aos-duration="2000">
       <h2>{{this.name}}</h2>
       <p>Date: {{this.date}}</p>
       <p>Location: {{this.location}}</p>
