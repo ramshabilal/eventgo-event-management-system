@@ -8,12 +8,6 @@ const router = express.Router();
 // Middleware to ensure user is logged in
 const ensureLoggedIn = connectEnsureLogin.ensureLoggedIn();
 
-// Middleware to handle errors
-// const handleErrors = (res, next) => (error) => {
-//     console.error(error);
-//     res.status(500).send('Internal Server Error');
-//     // or you can use next(error) to propagate the error to the error handling middleware
-// };
 
 // main page 
 router.get('/', (req, res) => {

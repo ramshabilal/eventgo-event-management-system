@@ -1,25 +1,26 @@
 import './config.mjs'; 
 import './db.mjs';
-import './auth.mjs';
 
 import passport from 'passport';
 import express from 'express';
 import session from 'express-session';
-import mongoose from 'mongoose';
-import connectEnsureLogin from 'connect-ensure-login';
-import LocalStrategy from 'passport-local';
 import flash from 'express-flash'; 
 import path from 'path';
 import { fileURLToPath } from 'url';
-import multer from 'multer'; // Import the multer library
 import routes from './routes.mjs'; // Import the router
+
+
+// import multer from 'multer'; // Import the multer library
+// import mongoose from 'mongoose';
+// import connectEnsureLogin from 'connect-ensure-login';
+// import LocalStrategy from 'passport-local';
 
 // Create a new Express application
  const app = express();
 
 // Set up session management with Express session
 app.use(session({
-    secret: 'your-secure-secret-key', // Replace with a secure secret key
+    secret: process.env.secret,
     resave: false,
     saveUninitialized: false,
 }));

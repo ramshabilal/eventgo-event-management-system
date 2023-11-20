@@ -39,4 +39,14 @@ const Event = mongoose.model('Event', eventSchema);
 
 mongoose.connect(process.env.DSN, { tls: true });
 
+const db = mongoose.connection;
+
+db.on('error', (err) => {
+    console.error('MongoDB connection error:', err);
+});
+
+db.once('open', () => {
+    console.log('Connected to MongoDB');
+});
+
 export { User, Event };
