@@ -90,6 +90,12 @@ Arrows may not be very accurate but point is that all pages can be navigated in 
 * Use a javascript library for some type of data visualization for example to visualize a calendar/trends/number of events every month etc
 I may not include all of these, but I will research these initially to shortlist the ones I want to use.
 
+User input validation:
+* User cannot register without entering both username and password
+* Ensures all required fields for an event (time, date, location,etc) are input before an event is added by using 'required' in form
+* Ensure date entered by user is valid by using type='date' in form
+* 
+
 ## [Link to Initial Main Project File](app.mjs) 
   
 ## Annotations / References Used
