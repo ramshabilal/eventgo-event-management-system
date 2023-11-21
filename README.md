@@ -2,14 +2,16 @@
 
 ## Overview
 
-EventGo! is an Event Management System (EMS) - a web application that simplifies event planning and registration. Users can register, create, and manage events, making it easy to host and attend events. Once signed up, a user can log in to add events and view their upcoming/saved/posted events.
+EventGo! is an Event Management System (EMS) - a web application that simplifies event planning and registration. Users can register, create, and manage events, making it easy to host and attend events.  
+
+Once signed up, a user can log in to add events and view their upcoming/saved/posted events. Moreover, users can also view current event trends such as 'most popular events' and 'number of events each month'!
 
 ## Data Model
 
 The application stores Users, Events, and Registrations:
 
 - Users can create and post events and register for other events.
-- Each event can have multiple user registrations.
+- Each event can have multiple user registrations (stored as references)
 - Users can register for multiple events. (via references)
 
 An Example User:
@@ -37,6 +39,7 @@ An Example Event with Users:
     { user: // a reference to a User, attended: false },
   ],
   createdAt: // timestamp
+  imageData: {...}
 }
 ```
 
@@ -44,8 +47,6 @@ An Example Event with Users:
 ## [Link to Commented First Draft Schema](db.mjs) 
 
 ## Wireframes
-
-(__TODO__: wireframes for all of the pages on your site; they can be as simple as photos of drawings or you can use a tool like Balsamiq, Omnigraffle, etc.)
 
 /login - page for login or sign up
 
@@ -72,16 +73,30 @@ Arrows may not be very accurate but point is that all pages can be navigated in 
 
 1. As a non-registered user, I can register a new account.
 2. As a user, I can log in to the site.
-3. As a user, I can create a new event.
-4. As a user, I can view all the events I've created.
-5. As a user, I can view event details.
-6. As a user, I can register for events.
+3. As a user, I can view all the events posted.
+4. As a user, I can register for events.
+5. As a user, I can create a new event.
+6. As a user, I can view all the events I've created.
+7. As a user, I can delete events that I created.
+8. As a user, I can view my bookings.
+9. As a user, I can view event trends. 
 
 ## Research Topics
   
 * (5 points) Integrate user authentication
-    * I'm going to be using passport.js for user authentication
-* (4 points) Perform client-side form validation using a JavaScript library
+    * I'm using passport.js for user authentication and express-session for session management.
+    * User can register for an account and then log in.
+    * Once logged in, the user can remain logged in for three hours - achieved with the help of session cookies.
+    * User can log out using the log-out button at the bottom of the screen.
+* (4 points) Perform client-side form validation and server-side validation and sanitization before using user input
+    * On the client side, forms have types such as 'date' set so the user enters the correct data. Moreover, fields required for the MongoDB schemas are set to be required to ensure user enters all required data.
+    * On the server side, mongo-sanitize is used to ensure user input is sanitized before being queried.
+    * Error handling is done to prevent the website from crashing and to gracefully convey errors.
+* (6 points) Use of libraries
+    1. FullCalendar
+    2. Chart.js
+    3. req flash
+    4. 
 * (3 points) Configuration management
     * dotenv
     * nconf
