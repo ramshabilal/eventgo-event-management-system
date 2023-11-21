@@ -84,8 +84,19 @@ Arrows may not be very accurate but point is that all pages can be navigated in 
 ## Research Topics
   
 * (5 points) Integrate user authentication
-    * I'm going to be using passport.js for user authentication
-* (4 points) Perform client-side form validation using a JavaScript library
+    * I'm using passport.js for user authentication and express-session for session management.
+    * User can register for an account and then log in.
+    * Once logged in, the user can remain logged in for three hours - achieved with the help of session cookies.
+    * User can log out using the log-out button at the bottom of the screen.
+* (4 points) Perform client-side form validation and server-side validation and sanitization before using user input
+    * On the client side, forms have types such as 'date' set so the user enters the correct data. Moreover, fields required for the MongoDB schemas are set to be required to ensure user enters all required data.
+    * On the server side, mongo-sanitize is used to ensure user input is sanitized before being queried.
+    * Error handling is done to prevent the website from crashing and to gracefully convey errors.
+* (6 points) Use of libraries
+    1. FullCalendar
+    2. Chart.js
+    3. req flash
+    4. 
 * (3 points) Configuration management
     * dotenv
     * nconf
