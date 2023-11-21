@@ -16,7 +16,7 @@ const ensureLoggedIn = connectEnsureLogin.ensureLoggedIn();
 
 // main page 
 router.get('/', (req, res) => {
-    res.render('home', {connString: process.env.DSN, secret: process.env.secret, Port: process.env.PORT});
+    res.render('home');
 });
 
 //login and logout routes
