@@ -74,7 +74,7 @@ router.get('/add', ensureLoggedIn, (req, res) => {
   });
 
   router.post('/add', ensureLoggedIn, upload.single('image'), async (req, res) => {
-    const { name, date, time, location, description } = req.body;
+    let { name, date, time, location, description } = req.body;
     const userId = req.user._id; // Get the ID of the logged-in user
   
     try{
@@ -101,6 +101,7 @@ router.get('/add', ensureLoggedIn, (req, res) => {
         // Redirect back to the page that shows all reviews (e.g., '/')
         res.redirect('/events');
     } catch(err) {
+        console.log(err); 
         req.flash('error', 'Error adding event.');
         res.redirect('/add'); // Redirect back to the form with an error message
         }
@@ -373,10 +374,8 @@ router.post('/mybookings/cancel', ensureLoggedIn, async (req, res) => {
     }
 });
 
-export default router;
 
-
-router.get('/eventsById/:eventId', async (req, res) => {
+router.get('/eventsById/:eventId', ensureLoggedIn, async (req, res) => {
     try {
         const eventId = req.params.eventId;
         const event = await Event.findOne({ _id: eventId }).exec();
@@ -414,4 +413,6 @@ router.get('/eventsById/:eventId', async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
- 
+
+
+export default router;
