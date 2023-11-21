@@ -88,31 +88,34 @@ Arrows may not be very accurate but point is that all pages can be navigated in 
     * User can register for an account and then log in.
     * Once logged in, the user can remain logged in for three hours - achieved with the help of session cookies.
     * User can log out using the log-out button at the bottom of the screen.
-* (4 points) Perform client-side form validation and server-side validation and sanitization before using user input
+* (4 points) User input validation
+Perform client-side form validation and server-side validation and sanitization before using user input
     * On the client side, forms have types such as 'date' set so the user enters the correct data. Moreover, fields required for the MongoDB schemas are set to be required to ensure user enters all required data.
+      * register.hbs page: User cannot register without entering both username and password
+      * login.hbs: need to enter valid username and password to log in.
+      * add.hbs page: Ensures all required fields for an event (time, date, location,etc) are input before an event is added by using 'required' in form.
+      * add.hbs: input types are set such as for date, type='date' so user can select from drop down and avoid errors
+      * whenever storing or displaying images, checks for valid binary data and data length > 0 before proceeding. 
     * On the server side, mongo-sanitize is used to ensure user input is sanitized before being queried.
-    * Error handling is done to prevent the website from crashing and to gracefully convey errors.
+      * Error handling is done to prevent the website from crashing and to gracefully convey errors using flash messages and alerts.
 * (6 points) Use of libraries
-    1. FullCalendar
-    2. Chart.js
-    3. req flash
-    4. 
-* (3 points) Configuration management
-    * dotenv
-    * nconf
-* (6 points) Use a front-end framework
-    * React
-* Use a javascript library for some type of data visualization for example to visualize a calendar/trends/number of events every month etc
-I may not include all of these, but I will research these initially to shortlist the ones I want to use.
+    1. FullCalendar - to display user's booked events on a calendar (dynamic).
+    2. Chart.js - to visualize number of events per month (dynamic).
+    3. Data aos - to add animations such as 'fade-up' on div elements. 
+    4. mongo-sanitize - to sanitize user input
+    5. passport - for authentication
+    6. dotenv - for configuration
+    7. multer - to enable image uploads
+    8. express-flash - to display flash messages on screen where appropriate such as for errors.
+    9. express-session: for session management
+    10. connect-ensure-login - to check and ensure user is logged when accessing events and other pages
+    12. Handlebars - for views
 
-User input validation:
-* User cannot register without entering both username and password
-* Ensures all required fields for an event (time, date, location,etc) are input before an event is added by using 'required' in form
-* Ensure date entered by user is valid by using type='date' in form
-* 
+* (3 points) Configuration management
+    * dotenv - as mentioned above 
+
 
 ## [Link to Initial Main Project File](app.mjs) 
   
 ## Annotations / References Used
 
-I have not written much code other than the schemas yet so no references so far. 
