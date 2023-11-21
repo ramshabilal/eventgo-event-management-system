@@ -1,8 +1,24 @@
 <!-- FILEPATH: /c:/Users/Hp/OneDrive - nyu.edu/Fall 2023/AIT/final-project-ramshabilal/views/eventDisplay.hbs -->
+{{#each event}}
+ <div class="event-box" data-aos="fade-up" data-aos-duration="3000">
+        <div class="eventHeading"><h2>{{this.name}}</h2></div>
+        <span class ="eventText">
+        <p>Date: {{this.date}}</p>
+        <p>Time: {{this.time}}</p>
+        <p>Location: {{this.location}}</p>
+        <p>Description: {{this.description}}</p>
 
-<div class="event-box">
-    <h2>{{event.title}}</h2>
-    <p>{{event.description}}</p>
-    <p>Date: {{event.date}}</p>
-    <p>Location: {{event.location}}</p>
-</div>
+        <form action="/events/register" method="post">
+              <input type="hidden" name="eventId" value="{{this._id}}">
+              <button type="submit">Register</button>
+        </form>
+        </span>
+        <span class="eventImage">
+      {{#if this.imageData}}
+        {{#if this.imageData.data.length}}
+        <img src="data:{{this.imageData.contentType}};base64,{{this.imageData.data}}">
+        {{/if}}
+      {{/if}}
+        </span>
+
+{{/each}}

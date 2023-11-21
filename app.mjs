@@ -23,6 +23,9 @@ app.use(session({
     secret: process.env.secret,
     resave: false,
     saveUninitialized: false,
+    cookie: {
+        maxAge: 3 * 60 * 60 * 1000, // 3 hours in milliseconds - so user can stay logged in for three hours
+    },
 }));
 // Use the express-flash middleware
 app.use(flash());

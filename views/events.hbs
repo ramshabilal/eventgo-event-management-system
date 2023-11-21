@@ -36,20 +36,25 @@
 
   {{#each events}}  
       <div class="event-box" data-aos="fade-up" data-aos-duration="3000">
-      <h2>{{this.name}}</h2>
-      <p>Date: {{this.date}}</p>
-      <p>Location: {{this.location}}</p>
-      <p>Description: {{this.description}}</p>
+        <div class="eventHeading"><h2>{{this.name}}</h2></div>
+        <span class ="eventText">
+        <p>Date: {{this.date}}</p>
+        <p>Time: {{this.time}}</p>
+        <p>Location: {{this.location}}</p>
+        <p>Description: {{this.description}}</p>
 
-      {{!-- {{#if event.imageData}}
-        <img src="data:{{this.imageData.contentType}};base64,{{event.imageData.data.toString('base64')}}" alt="{{event.name}}"> 
-      {{/if}} --}}
-
-      <form action="/events/register" method="post">
-            <input type="hidden" name="eventId" value="{{this._id}}">
-            <button type="submit">Register</button>
-      </form>
-      
+        <form action="/events/register" method="post">
+              <input type="hidden" name="eventId" value="{{this._id}}">
+              <button type="submit">Register</button>
+        </form>
+        </span>
+        <span class="eventImage">
+      {{#if this.imageData}}
+        {{#if this.imageData.data.length}}
+        <img src="data:{{this.imageData.contentType}};base64,{{this.imageData.data}}">
+        {{/if}}
+      {{/if}}
+        </span>
       </div>
 
   {{/each}}
@@ -57,29 +62,11 @@
 <br><br><br>
  <button> <a href="/logout" style="text-decoration: none;">Log Out</a>  </button> 
 </div>
+{{#if errorMessage}}
+    <script>
+        window.alert("{{errorMessage}}");
+    </script>
+{{/if}}
+
+</body>
 </html>
-
-
-
-
-{{!-- <table>
-  <thead>
-    <tr>
-      <th>Event Name</th>
-      <th>Date</th>
-      <th>Location</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each events}}
-      <tr style="background-color:black">
-        <td>{{name}}</td>
-        <td>{{date}}</td>
-        <td>{{location}}</td>
-        <td>
-          <button class="add-button" onclick="addEvent('{{id}}')">Add</button>
-        </td>
-      </tr>
-    {{/each}}
-  </tbody>
-</table> --}}

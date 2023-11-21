@@ -36,9 +36,14 @@
     <div class="event-box" data-aos="zoom-out" data-aos-duration="2000">
       <h2>{{this.name}}</h2>
       <p>Date: {{this.date}}</p>
+      <p>Time: {{this.time}}</p>
       <p>Location: {{this.location}}</p>
       <p>Description: {{this.description}}</p>
-
+      {{#if this.imageData}}
+        {{#if this.imageData.data.length}}
+          <img src="data:{{this.imageData.contentType}};base64,{{this.imageData.data}}">
+        {{/if}}
+      {{/if}}
       <!-- Add a delete button with a form -->
       <form method="POST" action="/myevents/delete/{{_id}}">
         <button type="submit">Delete Event</button>

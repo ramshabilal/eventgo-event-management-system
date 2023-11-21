@@ -1,8 +1,9 @@
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Roboto', Arial, Helvetica, sans-serif;
     /* background: linear-gradient(to right, rgb(171, 1, 171), rgb(255, 153, 0)); */
     background-color: black;
     color: white; 
+    letter-spacing: 0.5px;  
 }
 
 img {
@@ -68,14 +69,25 @@ button:hover {
 
 .appName {
     text-align: center;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
+    font-family: 'Roboto', sans-serif;
     font-size: 80px;
     font-weight: 800;
     color: #ffffff;
     text-decoration: none;
 }
 
-.event-box {
+.eventHeading {
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    font-size: 25px;
+    font-weight: 600;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 35px;
+}
+
+/* .event-box {
     display: flex;
     flex-direction: column;
     justify-content: left;
@@ -90,10 +102,54 @@ button:hover {
     border: none;
     cursor: pointer;
     box-shadow: 0 4px 8px 0 rgba(145, 142, 142, 0.8);
+} */
+
+/* .event-box p {
+    display: flex;
+    float: left;
+    width: 100%;
+    margin: 5px;
+    padding: 0px;
+
+} */
+
+/* .event-box img {
+    display: flex;
+    float: right;
+    width: 200px;
+    height: auto;
+    margin:auto;
+    margin-right: 0px;
+    padding-right: 0px;
+    
+} */
+
+.event-box {
+    display: flex;
+    justify-content: space-between;
+    padding: 40px;
+    margin: 100px 300px 100px 300px;
+    border-radius: 0px;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 8px 0 rgba(145, 142, 142, 0.8);
+    color: white;
+}
+
+.eventText {
+    flex: 1; /* Take up remaining space */
+    margin-right: 10px; /* Add some margin between text and image */
+}
+
+.eventImage {
+    flex-shrink: 0; /* Don't allow the image to shrink */
 }
 
 .event-box:hover {
-    background-color: #6b6b6bc3;
+    background-color: #512f2fc3;
     color: ff9900; 
 }
 

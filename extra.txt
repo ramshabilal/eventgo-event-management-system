@@ -1,0 +1,70 @@
+/*
+// STARTING HERE
+
+// // Route handler for processing the search form and displaying the edit form
+// router.post('/myevents', connectEnsureLogin.ensureLoggedIn(), async (req, res) => {
+//     const userId = req.user._id;
+//     const { searchQuery } = req.body;
+
+//     try {
+//         // Query the Event collection to find events organized by the logged-in user
+//         const userEvents = await Event.find({ organizer: userId, name: { $regex: searchQuery, $options: 'i' } }).exec();
+//         console.log(userEvents);
+//         // Render the editEvents template with the search results
+//         res.render('edit', { userEvents });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).send('Internal Server Error');
+//     }
+// });
+
+// Route handler for displaying the edit form for a specific event
+// router.get('/myevents/edit/:eventId', connectEnsureLogin.ensureLoggedIn(), async (req, res) => {
+//     const userId = req.user._id;
+//     const eventId = req.params.eventId;
+
+//     try {
+//         // Query the Event collection to find the specific event
+//         const event = await Event.findOne({ _id: eventId, organizer: userId }).exec();
+
+//         if (!event) {
+//             return res.status(404).send('Event not found');
+//         }
+
+//         // Render the editEvent template with the event details
+//         res.render('editEvent', { event });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).send('Internal Server Error');
+//     }
+// });
+
+// Route handler for processing the form submission and updating the event
+// router.post('/myevents/edit/:eventId', connectEnsureLogin.ensureLoggedIn(), async (req, res) => {
+//     const userId = req.user._id;
+//     const eventId = req.params.eventId;
+//     const { name, date, location, description } = req.body;
+
+//     try {
+//         // Update the specific event
+//         const updatedEvent = await Event.findOneAndUpdate(
+//             { _id: eventId, organizer: userId },
+//             { name, date, location, description },
+//             { new: true }
+//         ).exec();
+
+//         if (!updatedEvent) {
+//             return res.status(404).send('Event not found');
+//         }
+
+//         // Redirect back to the myevents route or another appropriate route
+//         res.redirect('/myevents');
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).send('Internal Server Error');
+//     }
+// });
+
+
+// Ending HERE
+*/ 

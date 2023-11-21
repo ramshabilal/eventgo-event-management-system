@@ -10,12 +10,15 @@
 
    <h1 class="appName">Add Events</h1>
 
-<form method="POST" action="/add" class="add-form">
+<form method="POST" action="/add" class="add-form" enctype="multipart/form-data">
   <label for="name">Event Name:</label>
   <input type="text" name="name" required>
 <br>
   <label for="date">Event Date:</label>
   <input type="date" name="date" required>
+<br>
+  <label for="time">Time:</label>
+  <input type="text" id="time" name="time" required>
 <br>
   <label for="location">Event Location:</label>
   <input type="text" name="location" required>
@@ -23,9 +26,17 @@
   <label for="description">Event Description:</label>
   <textarea name="description" rows="4" required></textarea>
 <br>
+  <label for="image">Event Image (optional):</label>
+  <input type="file" name="image" accept="image/*">
+<br>
   <button type="submit">Add Event</button>
 </form>
 
-</body>
+{{#if errorMessage}}
+    <script>
+        window.alert("{{errorMessage}}");
+    </script>
+{{/if}}
 
+</body>
 </html>

@@ -16,6 +16,7 @@ const eventSchema = new mongoose.Schema({
   organizer: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   name: { type: String, required: true },
   date: { type: Date, required: true },
+  time: { type: String, required: true },
   location: { type: String, required: true },
   description: { type: String, required: true },
   registrations: [
@@ -25,19 +26,17 @@ const eventSchema = new mongoose.Schema({
     },
   ],
   createdAt: { type: Date, default: Date.now },
-  
-  // fields for image data
-  // imageData: {
-  //   data: Buffer, // Binary image data
-  //   contentType: String, // MIME type (e.g., 'image/jpeg', 'image/png')
-  // },
+  imageData: {
+    data: Buffer, // Binary image data
+    contentType: String, // MIME type (e.g., 'image/jpeg', 'image/png')
+  },
 });
 
 // Create and export the User and Event models
 const User = mongoose.model('User', userSchema);
 const Event = mongoose.model('Event', eventSchema);
 
-mongoose.connect(process.env.DSN, { tls: true });
+mongoose.connect(process.env.DSN);
 
 const db = mongoose.connection;
 
