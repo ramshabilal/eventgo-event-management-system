@@ -1,1 +1,0 @@
-# eventgo-event-management-system
