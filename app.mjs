@@ -8,7 +8,7 @@ import flash from 'express-flash';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import routes from './routes.mjs'; // Import the router
-
+const mongoUrl=process.env.DSN
 
 // import multer from 'multer'; // Import the multer library
 // import mongoose from 'mongoose';
@@ -26,6 +26,7 @@ app.use(session({
     cookie: {
         maxAge: 3 * 60 * 60 * 1000, // 3 hours in milliseconds - so user can stay logged in for three hours
     },
+	store: MongoStore.create({ mongoUrl })
 }));
 // Use the express-flash middleware
 app.use(flash());
