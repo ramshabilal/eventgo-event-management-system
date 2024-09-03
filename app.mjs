@@ -8,6 +8,8 @@ import flash from 'express-flash';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import routes from './routes.mjs'; // Import the router
+import MongoStore from 'connect-mongo';
+
 const mongoUrl=process.env.DSN
 
 // import multer from 'multer'; // Import the multer library
@@ -57,6 +59,7 @@ const __dirname = path.dirname(__filename);
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.set('views', path.join(__dirname, 'views'));
+
 // configure templating to hbs
 app.set('view engine', 'hbs');
 
