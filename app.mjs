@@ -12,17 +12,13 @@ import MongoStore from 'connect-mongo';
 
 const mongoUrl=process.env.DSN
 
-// import multer from 'multer'; // Import the multer library
-// import mongoose from 'mongoose';
-// import connectEnsureLogin from 'connect-ensure-login';
-// import LocalStrategy from 'passport-local';
 
 // Create a new Express application
  const app = express();
 
 // Set up session management with Express session
 app.use(session({
-    secret: process.env.secret,
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {
