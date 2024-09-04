@@ -110,8 +110,8 @@ router.get('/add', ensureLoggedIn, (req, res) => {
 // route to display all events with search and sort options
 router.get('/events', ensureLoggedIn, async (req, res) => {
     try {
-        // Extract search and sort parameters from the query string
-        const { searchQuery, sortOrder } = req.query;
+        // Extract search, sort, and pagination parameters from the query string
+        const { searchQuery, sortOrder, page = 1, limit = 10 } = req.query;
 
         // Build the query object based on search criteria
         const query = {};
@@ -119,9 +119,15 @@ router.get('/events', ensureLoggedIn, async (req, res) => {
             query.name = { $regex: searchQuery, $options: 'i' };
         }
 
-        // Fetch and sort events from the database
+        // Calculate skip value for pagination
+        const skip = (page - 1) * limit;
+
+        // Fetch and sort events from the database with pagination
         const sortDirection = sortOrder === 'asc' ? 1 : -1;
-        const events = await Event.find(query).sort({ date: sortDirection });
+        const events = await Event.find(query)
+                                  .sort({ date: sortDirection })
+                                  .skip(skip)
+                                  .limit(parseInt(limit));
 
         // Convert image data to base64 string for each event
         const eventsWithImageData = events.map(event => {
@@ -129,7 +135,7 @@ router.get('/events', ensureLoggedIn, async (req, res) => {
                 if (!event.imageData) {
                     return event;  // or handle the case where imageData is missing
                 }
-        
+
                 const eventData = {
                     ...event.toObject(), // Convert Mongoose document to plain object
                     imageData: {
@@ -144,18 +150,26 @@ router.get('/events', ensureLoggedIn, async (req, res) => {
                 return null;  // or handle the error case
             }
         }).filter(eventData => eventData !== null);  // Remove null entries from the array
-        
+
         // Retrieve flash message
         const errorMessage = req.flash('error')[0];
 
-        // Render the 'events' view, passing the events data
-        res.render('events', { events: eventsWithImageData, searchQuery, sortOrder, errorMessage });
+        // Render the 'events' view, passing the events data along with pagination info
+        res.render('events', {
+            events: eventsWithImageData,
+            searchQuery,
+            sortOrder,
+            errorMessage,
+            currentPage: parseInt(page),
+            totalPages: Math.ceil(await Event.countDocuments(query) / limit),
+        });
     } catch (error) {
         console.error(error);
         req.flash('error', 'Error fetching events');
         res.redirect('/events');
     }
 });
+
 
 // route to display trends in events 
 router.get('/events/trends', ensureLoggedIn, async (req, res) => {
