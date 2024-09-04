@@ -39,11 +39,11 @@
       <p>Time: {{this.time}}</p>
       <p>Location: {{this.location}}</p>
       <p>Description: {{this.description}}</p>
-      {{#if this.imageData}}
-        {{#if this.imageData.data.length}}
-          <img src="data:{{this.imageData.contentType}};base64,{{this.imageData.data}}">
-        {{/if}}
-      {{/if}}
+     {{#if this.imageData}}
+    <img src="{{this.imageData}}" alt="{{this.name}}" loading="lazy" />
+{{else}}
+    <img src="/path/to/placeholder-image.jpg" alt="No image available" loading="lazy" />
+{{/if}}
       <!-- Add a delete button with a form -->
       <form method="POST" action="/myevents/delete/{{_id}}">
         <button type="submit">Delete Event</button>

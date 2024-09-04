@@ -54,10 +54,10 @@
             <p>Description: {{this.description}}</p>
 
             {{#if this.imageData}}
-                {{#if this.imageData.data.length}}
-                    <img src="data:{{this.imageData.contentType}};base64,{{this.imageData.data}}">
-                {{/if}}
-            {{/if}}
+    <img src="{{this.imageData}}" alt="{{this.name}}" loading="lazy" />
+{{else}}
+    <img src="/path/to/placeholder-image.jpg" alt="No image available" loading="lazy" />
+{{/if}}
 
             <!-- Add a form for canceling registration -->
             <form action="/mybookings/cancel" method="post">

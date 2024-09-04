@@ -110,63 +110,61 @@ router.get('/add', ensureLoggedIn, (req, res) => {
 // route to display all events with search and sort options
 router.get('/events', ensureLoggedIn, async (req, res) => {
     try {
-        // Extract search, sort, and pagination parameters from the query string
-        const { searchQuery, sortOrder, page = 1, limit = 10 } = req.query;
-
-        // Build the query object based on search criteria
+        const { searchQuery, sortOrder } = req.query;
         const query = {};
         if (searchQuery) {
             query.name = { $regex: searchQuery, $options: 'i' };
         }
-
-        // Calculate skip value for pagination
-        const skip = (page - 1) * limit;
-
-        // Fetch and sort events from the database with pagination
         const sortDirection = sortOrder === 'asc' ? 1 : -1;
-        const events = await Event.find(query)
-                                  .sort({ date: sortDirection })
-                                  .skip(skip)
-                                  .limit(parseInt(limit));
+        const events = await Event.find(query).sort({ date: sortDirection });
 
-        // Convert image data to base64 string for each event
         const eventsWithImageData = events.map(event => {
             try {
                 if (!event.imageData) {
-                    return event;  // or handle the case where imageData is missing
+                    return event;
                 }
-
                 const eventData = {
-                    ...event.toObject(), // Convert Mongoose document to plain object
-                    imageData: {
-                        contentType: event.imageData.contentType,
-                        data: event.imageData.data ? event.imageData.data.toString('base64') : null,
-                    },
+                    ...event.toObject(),
+                    imageData: event.imageData ? `/images/${event._id}` : null,
                 };
                 return eventData;
             } catch (error) {
                 console.error('Error processing event:', event);
                 console.error(error);
-                return null;  // or handle the error case
+                return null;
             }
-        }).filter(eventData => eventData !== null);  // Remove null entries from the array
+        }).filter(eventData => eventData !== null);
 
-        // Retrieve flash message
         const errorMessage = req.flash('error')[0];
 
-        // Render the 'events' view, passing the events data along with pagination info
-        res.render('events', {
-            events: eventsWithImageData,
-            searchQuery,
-            sortOrder,
-            errorMessage,
-            currentPage: parseInt(page),
-            totalPages: Math.ceil(await Event.countDocuments(query) / limit),
+        // Modify the rendering to include the 'loading="lazy"' attribute in the img tags
+        res.render('events', { 
+            events: eventsWithImageData, 
+            searchQuery, 
+            sortOrder, 
+            errorMessage, 
+            lazyLoading: true // Pass a flag to enable lazy loading in the template
         });
     } catch (error) {
         console.error(error);
         req.flash('error', 'Error fetching events');
         res.redirect('/events');
+    }
+});
+
+
+router.get('/images/:id', async (req, res) => {
+    try {
+        const event = await Event.findById(req.params.id);
+        if (event && event.imageData) {
+            res.contentType(event.imageData.contentType);
+            res.send(event.imageData.data);
+        } else {
+            res.status(404).send('Image not found');
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error fetching image');
     }
 });
 
@@ -235,53 +233,95 @@ router.post('/events/register', ensureLoggedIn, async (req, res) => {
 });
 
 // route to display events the user added with search and sort options
+// router.get('/myevents', ensureLoggedIn, async (req, res) => {
+//     try {
+//         // Extract search and sort parameters from the query string
+//         const { searchQuery, sortOrder } = req.query;
+
+//         // Build the query object based on search criteria
+//         const userId = req.user._id;
+//         const query = { organizer: userId };
+//         if (searchQuery) {
+//             query.name = { $regex: searchQuery, $options: 'i' };
+//         }
+
+//         // Fetch and sort user events from the database
+//         const sortDirection = sortOrder === 'asc' ? 1 : -1;
+//         const userEvents = await Event.find(query).sort({ date: sortDirection });
+
+//         // Convert image data to base64 string for each event
+//         const eventsWithImageData = userEvents.map(event => {
+//             try {
+//                 if (!event.imageData) {
+//                     return event;  // or handle the case where imageData is missing
+//                 }
+        
+//                 const eventData = {
+//                     ...event.toObject(), // Convert Mongoose document to plain object
+//                     imageData: {
+//                         contentType: event.imageData.contentType,
+//                         data: event.imageData.data ? event.imageData.data.toString('base64') : null,
+//                     },
+//                 };
+//                 return eventData;
+//             } catch (error) {
+//                 console.error('Error processing event:', event);
+//                 console.error(error);
+//                 return null;  // or handle the error case
+//             }
+//         }).filter(eventData => eventData !== null);  // Remove null entries from the array
+        
+
+//         // Render the 'myevents' view, passing the user's events data
+//         res.render('myevents', { userEvents: eventsWithImageData, searchQuery, sortOrder });
+//     } catch (error) {
+//         console.error(error);
+//         req.flash('error', 'Error fetching user events');
+//         res.redirect('/myevents');
+//     }
+// });
 router.get('/myevents', ensureLoggedIn, async (req, res) => {
     try {
-        // Extract search and sort parameters from the query string
         const { searchQuery, sortOrder } = req.query;
-
-        // Build the query object based on search criteria
         const userId = req.user._id;
         const query = { organizer: userId };
         if (searchQuery) {
             query.name = { $regex: searchQuery, $options: 'i' };
         }
-
-        // Fetch and sort user events from the database
         const sortDirection = sortOrder === 'asc' ? 1 : -1;
         const userEvents = await Event.find(query).sort({ date: sortDirection });
 
-        // Convert image data to base64 string for each event
         const eventsWithImageData = userEvents.map(event => {
             try {
                 if (!event.imageData) {
-                    return event;  // or handle the case where imageData is missing
+                    return event;
                 }
-        
                 const eventData = {
-                    ...event.toObject(), // Convert Mongoose document to plain object
-                    imageData: {
-                        contentType: event.imageData.contentType,
-                        data: event.imageData.data ? event.imageData.data.toString('base64') : null,
-                    },
+                    ...event.toObject(),
+                    imageData: event.imageData ? `/images/${event._id}` : null,
                 };
                 return eventData;
             } catch (error) {
                 console.error('Error processing event:', event);
                 console.error(error);
-                return null;  // or handle the error case
+                return null;
             }
-        }).filter(eventData => eventData !== null);  // Remove null entries from the array
-        
+        }).filter(eventData => eventData !== null);
 
-        // Render the 'myevents' view, passing the user's events data
-        res.render('myevents', { userEvents: eventsWithImageData, searchQuery, sortOrder });
+        // Modify the rendering to include the 'loading="lazy"' attribute in the img tags
+        res.render('myevents', { 
+            userEvents: eventsWithImageData, 
+            searchQuery, 
+            sortOrder,
+            lazyLoading: true // Pass a flag to enable lazy loading in the template
+        });
     } catch (error) {
         console.error(error);
         req.flash('error', 'Error fetching user events');
         res.redirect('/myevents');
     }
 });
+
 
 
 
@@ -311,45 +351,38 @@ router.post('/myevents/delete/:eventId', ensureLoggedIn, async (req, res) => {
 // Route to display events the user has registered for
 router.get('/mybookings', ensureLoggedIn, async (req, res) => {
     try {
-        // Get the user ID from the logged-in user
         const userId = req.user._id;
-
-        // Fetch the user's document with populated events_registered field
         const user = await User.findById(userId).populate('events_registered').exec();
-
-        // Extract the registered events from the user document
         const registeredEvents = user.events_registered;
 
-                // Convert image data to base64 string for each event
-                const eventsWithImageData = registeredEvents.map(event => {
-                    try {
-                        if (!event.imageData) {
-                            return event;  // or handle the case where imageData is missing
-                        }
-                
-                        const eventData = {
-                            ...event.toObject(), // Convert Mongoose document to plain object
-                            imageData: {
-                                contentType: event.imageData.contentType,
-                                data: event.imageData.data ? event.imageData.data.toString('base64') : null,
-                            },
-                        };
-                        return eventData;
-                    } catch (error) {
-                        console.error('Error processing event:', event);
-                        console.error(error);
-                        return null;  // or handle the error case
-                    }
-                }).filter(eventData => eventData !== null);  // Remove null entries from the array
-                
-        
-        // Render the 'myregistrations' view, passing the registered events data
-        res.render('bookings', { registeredEvents:eventsWithImageData });
+        const eventsWithImageData = registeredEvents.map(event => {
+            try {
+                if (!event.imageData) {
+                    return event;
+                }
+                const eventData = {
+                    ...event.toObject(),
+                    imageData: event.imageData ? `/images/${event._id}` : null,
+                };
+                return eventData;
+            } catch (error) {
+                console.error('Error processing event:', event);
+                console.error(error);
+                return null;
+            }
+        }).filter(eventData => eventData !== null);
+
+        // Modify the rendering to include the 'loading="lazy"' attribute in the img tags
+        res.render('bookings', { 
+            registeredEvents: eventsWithImageData,
+            lazyLoading: true // Pass a flag to enable lazy loading in the template
+        });
     } catch (error) {
         console.error(error);
         res.status(500).send('Internal Server Error');
     }
 });
+
 
 // Route to handle registration cancellation
 router.post('/mybookings/cancel', ensureLoggedIn, async (req, res) => {
