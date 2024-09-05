@@ -6,6 +6,8 @@ EventGo! is an Event Management System (EMS) - a web application that simplifies
 
 Once signed up, a user can log in to add events and view their upcoming/saved/posted events. Moreover, users can also view current event trends such as 'most popular events' and 'number of events each month'!
 
+## [Link to Deployed Site](https://eventgo-events.vercel.app/)
+
 ## Data Model
 
 The application stores Users, Events, and Registrations:
